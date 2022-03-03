@@ -91,7 +91,7 @@ class Shimmer extends StatefulWidget {
     this.direction = ShimmerDirection.ltr,
     this.loop = 0,
     this.enabled = true,
-        this.hideOnDisabled = true,
+    this.hideOnDisabled = true,
   })  : gradient = LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.centerRight,
@@ -170,11 +170,14 @@ class _ShimmerState extends State<Shimmer> with SingleTickerProviderStateMixin {
       builder: (BuildContext context, Widget? child) =>
           widget.hideOnDisabled && !widget.enabled
               ? child! // child is required
-              : _Shimmer(
-                  child: child,
-                  direction: widget.direction,
-                  gradient: widget.gradient,
-                  percent: _controller.value,
+              : IgnorePointer(
+                  ignoring: true,
+                  child: _Shimmer(
+                    child: child,
+                    direction: widget.direction,
+                    gradient: widget.gradient,
+                    percent: _controller.value,
+                  ),
                 ),
     );
   }
